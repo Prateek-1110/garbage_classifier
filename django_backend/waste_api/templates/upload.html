@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Garbage Classifier</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        img{
+            max-width: 300px;
+            margin-top: 20px;
+        }
+
+        .prediction{
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        .top{
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+<div style="margin-bottom:30px">
+
+<a href="/api/">Upload</a> |
+
+<a href="/api/history/">History</a> |
+
+{% if user.is_authenticated %}
+
+<a href="/api/logout/">Logout</a>
+
+{% else %}
+
+<a href="/accounts/login/">Login</a> |
+
+<a href="/api/signup/">Signup</a>
+
+{% endif %}
+
+</div>
+<h1>AI Garbage Classification</h1>
+
+<input type="file" id="imageInput">
+
+<br><br>
+
+<button onclick="predict()">Predict</button>
+
+<br>
+
+<img id="preview">
+
+<div id="results"></div>
+
+<script>
+
+// Function to get CSRF token from Django cookies
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+
+            if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function predict(){
+
+    const file = document.getElementById("imageInput").files[0]
+
+    if(!file){
+        alert("Please upload an image")
+        return
+    }
+
+    // preview image
+    document.getElementById("preview").src = URL.createObjectURL(file)
+
+    const formData = new FormData()
+    formData.append("image", file)
+
+    const csrftoken = getCookie("csrftoken")
+
+    fetch("/api/predict/",{
+        method:"POST",
+        headers:{
+            "X-CSRFToken": csrftoken
+        },
+        body:formData
+    })
+    .then(res => res.json())
+.then(data => {
+
+    let html = `
+        <h2>Prediction Result</h2>
+
+        <div style="
+            display:inline-block;
+            padding:25px;
+            border-radius:12px;
+            border:1px solid #ddd;
+            background:#f9f9f9;
+            margin-top:20px;
+            width:350px;
+        ">
+    `
+
+    data.predictions.forEach((p,i)=>{
+
+        if(i===0){
+            html += `
+                <div style="font-size:24px;color:green;margin-bottom:10px">
+                    🥇 ${p.class} — ${p.confidence}%
+                </div>
+            `
+        }else{
+            html += `
+                <div style="font-size:18px">
+                    ${p.class} — ${p.confidence}%
+                </div>
+            `
+        }
+
+    })
+
+    html += `
+        <hr style="margin:15px 0">
+
+        <div style="font-size:16px;line-height:1.5;color:#333">
+            ${data.guide}
+        </div>
+
+    </div>
+    `
+
+    document.getElementById("results").innerHTML = html
+})
+}
+</script>
+
+</body>
+
+</html>

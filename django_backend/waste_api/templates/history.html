@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Prediction History</title>
+</head>
+
+<body>
+
+<div style="margin-bottom:30px">
+
+<a href="/api/">Upload</a> |
+<a href="/api/history/">History</a> |
+
+{% if user.is_authenticated %}
+<a href="/api/logout/">Logout</a>
+{% else %}
+<a href="/accounts/login/">Login</a> |
+<a href="/api/signup/">Signup</a>
+{% endif %}
+
+</div>
+
+
+<h1>Prediction History</h1>
+
+{% for p in predictions %}
+
+<div style="margin-bottom:20px">
+
+<img src="/media/{{p.image}}" width="200">
+
+<p>
+Prediction: <b>{{p.predicted_class}}</b><br>
+Confidence: {{p.confidence}}%
+</p>
+
+<hr>
+
+</div>
+
+{% endfor %}
+
+</body>
+
+</html>
