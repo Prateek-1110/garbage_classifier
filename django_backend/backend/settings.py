@@ -96,14 +96,14 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-# STATIC_URL = 'static/'
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = "media"
 MEDIA_URL = "/media/"
-LOGIN_REDIRECT_URL = "http://localhost:3000"
-LOGOUT_REDIRECT_URL = "http://localhost:3000"
+FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
+LOGIN_REDIRECT_URL = FRONTEND_URL
+LOGOUT_REDIRECT_URL = FRONTEND_URL
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "https://garbage-classifier-three.vercel.app",
