@@ -18,7 +18,7 @@ staticfiles/
 .DS_Store
 
 # ML models / datasets
-*.pth
+# *.pth
 *.pt
 *.h5
 *.ckpt
