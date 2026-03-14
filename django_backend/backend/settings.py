@@ -10,7 +10,11 @@ print(f"--- DOES THIS FILE ACTUALLY EXIST? {os.path.exists(ENV_FILE_PATH)} ---")
 load_dotenv(ENV_FILE_PATH)
 SECRET_KEY = 'django-insecure-4n9yzrtp%2vkgd1!#b0*6balodxi0!l$u!3!jlgre)d)w5kk=5'
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'garbage-classifier-backend-nndn.onrender.com',
+    'localhost',
+    '127.0.0.1',
+]
 INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
