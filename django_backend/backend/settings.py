@@ -1,5 +1,13 @@
+import os
+import sys
 from pathlib import Path
+from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = BASE_DIR.parent
+ENV_FILE_PATH = str(ROOT_DIR / '.env')
+print(f"--- LOOKING FOR ENV FILE AT: {ENV_FILE_PATH} ---")
+print(f"--- DOES THIS FILE ACTUALLY EXIST? {os.path.exists(ENV_FILE_PATH)} ---")
+load_dotenv(ENV_FILE_PATH)
 SECRET_KEY = 'django-insecure-4n9yzrtp%2vkgd1!#b0*6balodxi0!l$u!3!jlgre)d)w5kk=5'
 DEBUG = True
 ALLOWED_HOSTS = []
@@ -91,9 +99,11 @@ LOGIN_REDIRECT_URL = "http://localhost:3000"
 LOGOUT_REDIRECT_URL = "http://localhost:3000"
 CORS_ALLOW_ALL_ORIGINS = True
 ACCOUNT_EMAIL_VERIFICATION = "none"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = "email"
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_SIGNUP_FIELDS = ['email']
+ACCOUNT_LOGIN_METHODS = {'email'}
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
@@ -104,6 +114,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
 
 ]
+
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SECURE = False 
@@ -113,10 +124,22 @@ SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
 SOCIALACCOUNT_QUERY_EMAIL = True
-import os
-
-GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
-GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": os.environ.get("GOOGLE_CLIENT_ID"),
+            "secret": os.environ.get("GOOGLE_CLIENT_SECRET"),
+            "key": ""
+        },
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}
 import logging
 LOGGING = {
     'version': 1,

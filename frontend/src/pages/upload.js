@@ -1,91 +1,70 @@
-import { useState } from "react";
-import axios from "axios";
-import { useDropzone } from "react-dropzone";
-import ResultCard from "../ components/resultcard";
+// import UploadCard from "../components/uploadcard";
+import UploadCard from "../ components/uploadcard";
 
-function UploadCard() {
-
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState(null);
-  const [result, setResult] = useState(null);
-
-  const onDrop = (acceptedFiles) => {
-
-    const file = acceptedFiles[0];
-
-    setImage(file);
-    setPreview(URL.createObjectURL(file));
-  };
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      "image/*": []
-    }
-  });
-
-  const handleUpload = async () => {
-
-    if (!image) {
-      alert("Upload an image first");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("image", image);
-
-    const res = await axios.post(
-      "http://127.0.0.1:8000/api/predict/",
-      formData
-    );
-
-    setResult(res.data);
-  };
-
+function Upload() {
   return (
+    <>
+      <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
-    <div className="bg-white p-10 rounded-xl shadow-lg w-[420px] text-center">
-
-      <h2 className="text-2xl font-bold mb-6">
-        Upload Garbage Image
-      </h2>
-
-      {/* Drag & Drop Area */}
-
-      <div
-        {...getRootProps()}
-        className={`border-2 border-dashed p-10 rounded-lg cursor-pointer transition
-        ${isDragActive ? "border-green-500 bg-green-50" : "border-gray-300"}`}
-      >
-
-        <input {...getInputProps()} />
-
-        {preview ? (
-          <img
-            src={preview}
-            alt="preview"
-            className="mx-auto max-h-48"
-          />
-        ) : (
-          <p className="text-gray-500">
-            Drag & drop an image here, or click to select
-          </p>
-        )}
-
+      <div className="upload-page">
+        <div className="upload-page-bg" />
+        <div className="upload-page-inner">
+          <div className="upload-page-header">
+            <h1 className="upload-page-title">Waste Scanner</h1>
+            <p className="upload-page-sub">Upload a photo and let AI classify your waste instantly</p>
+          </div>
+          <UploadCard />
+        </div>
       </div>
 
-      <button
-        onClick={handleUpload}
-        className="mt-6 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700"
-      >
-        Predict
-      </button>
-
-      {result && <ResultCard result={result} />}
-
-    </div>
-
+      <style>{`
+        .upload-page {
+          background: #080808;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding-top: 80px;
+          position: relative;
+        }
+        .upload-page-bg {
+          position: absolute;
+          inset: 0;
+          background-image:
+            linear-gradient(rgba(74,222,128,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(74,222,128,0.025) 1px, transparent 1px);
+          background-size: 40px 40px;
+          pointer-events: none;
+        }
+        .upload-page-inner {
+          position: relative;
+          z-index: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 32px;
+          padding: 40px 20px;
+        }
+        .upload-page-header {
+          text-align: center;
+        }
+        .upload-page-title {
+          font-family: 'Space Mono', monospace;
+          font-size: 40px;
+          font-weight: 700;
+          color: #fff;
+          letter-spacing: -0.03em;
+          margin: 0 0 10px;
+        }
+        .upload-page-sub {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 15px;
+          color: #555;
+          margin: 0;
+        }
+      `}</style>
+    </>
   );
 }
 
-export default UploadCard;
+export default Upload;
