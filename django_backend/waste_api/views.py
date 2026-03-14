@@ -10,6 +10,8 @@ from rest_framework.response import Response
 import sys
 import os
 from .models import Prediction
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 sys.path.append(BASE_DIR)
 
@@ -27,6 +29,25 @@ DISPOSAL_GUIDE = {
     "shoes": "Shoes should be donated if usable or placed in textile recycling bins.",
     "trash": "This item is not recyclable and should be placed in general landfill waste bins."
 }
+
+@api_view(["GET"])
+def history_api(request):
+
+    predictions = Prediction.objects.order_by("-created_at")[:20]
+
+    data = []
+
+    for p in predictions:
+        data.append({
+            "id": p.id,
+            "image": p.image.url,
+            "class": p.predicted_class,
+            "confidence": p.confidence,
+            "time": p.created_at
+        })
+
+    return Response(data)
+    
 @api_view(["POST"])
 def predict(request):
 

@@ -24,3 +24,4 @@ staticfiles/
 *.ckpt
 data/
 datasets/
+.env

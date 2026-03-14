@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login with Google</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background: linear-gradient(135deg,#34d399,#3b82f6);
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .card{
+            background:white;
+            padding:40px;
+            border-radius:12px;
+            text-align:center;
+            width:350px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        button{
+            background:#4285F4;
+            color:white;
+            border:none;
+            padding:12px 20px;
+            font-size:16px;
+            border-radius:6px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#357ae8;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Sign in with Google</h2>
+
+<p>Continue to Garbage AI using your Google account.</p>
+
+<form method="post">
+{% csrf_token %}
+<button type="submit">
+Continue with Google
+</button>
+</form>
+
+</div>
+
+</body>
+
+</html>
