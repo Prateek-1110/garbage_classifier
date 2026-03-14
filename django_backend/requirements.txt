@@ -11,6 +11,6 @@ PyJWT[crypto]
 cryptography
 torch
 torchvision
-pencv-python-headless
+opencv-python-headless
 pillow
 numpy
