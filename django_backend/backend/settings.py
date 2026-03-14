@@ -9,7 +9,7 @@ print(f"--- LOOKING FOR ENV FILE AT: {ENV_FILE_PATH} ---")
 print(f"--- DOES THIS FILE ACTUALLY EXIST? {os.path.exists(ENV_FILE_PATH)} ---")
 load_dotenv(ENV_FILE_PATH)
 SECRET_KEY = 'django-insecure-4n9yzrtp%2vkgd1!#b0*6balodxi0!l$u!3!jlgre)d)w5kk=5'
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = [
     'garbage-classifier-backend-nndn.onrender.com',
     'localhost',
@@ -104,11 +104,13 @@ MEDIA_ROOT = "media"
 MEDIA_URL = "/media/"
 LOGIN_REDIRECT_URL = "http://localhost:3000"
 LOGOUT_REDIRECT_URL = "http://localhost:3000"
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "https://garbage-classifier-three.vercel.app",
+    "http://localhost:3000", 
+]
+CORS_ALLOW_CREDENTIALS = True
 ACCOUNT_EMAIL_VERIFICATION = "none"
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_USERNAME_REQUIRED = False
-# ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_SIGNUP_FIELDS = ['email']
 ACCOUNT_LOGIN_METHODS = {'email'}
 SOCIALACCOUNT_QUERY_EMAIL = True
@@ -116,16 +118,15 @@ SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://127.0.0.1:8000",
+    "https://garbage-classifier-three.vercel.app",
+    "https://garbage-classifier-backend-nndn.onrender.com",
     "http://localhost:3000",
-    "http://localhost:8000",
-
 ]
 
-SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_SECURE = False 
-CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True

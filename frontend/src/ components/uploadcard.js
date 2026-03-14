@@ -22,21 +22,30 @@ function UploadCard() {
     handleFile(e.dataTransfer.files[0]);
   };
 
-  const handleUpload = async () => {
-    if (!image) return;
-    const formData = new FormData();
-    formData.append("image", image);
-    try {
-      setLoading(true);
-      setResult(null);
-      const res = await axios.post("http://127.0.0.1:8000/api/predict/", formData);
-      setResult(res.data);
-    } catch (error) {
-      console.error(error);
-      alert("Prediction failed. Please try again.");
-    }
+ const handleUpload = async () => {
+  if (!image) return;
+  const formData = new FormData();
+  formData.append("image", image);
+  
+  try {
+    setLoading(true);
+    setResult(null);
+    
+    // 1. Grab the URL from Vercel, or use localhost if you are testing on your laptop
+    const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
+    
+    // 2. Use backticks (`) to inject the dynamic URL into the axios request
+    const res = await axios.post(`${API_URL}/api/predict/`, formData);
+    
+    setResult(res.data);
+  } catch (error) {
+    console.error("Upload Error:", error);
+    alert("Prediction failed. Please try again.");
+  } finally {
+    // 3. Using 'finally' ensures loading is set to false whether it succeeds or fails
     setLoading(false);
-  };
+  }
+};
 
   const clearImage = () => {
     setImage(null);

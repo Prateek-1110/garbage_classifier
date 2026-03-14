@@ -4,9 +4,11 @@ export const isLoggedIn = () => {
 };
 
 export const loginWithGoogle = () => {
-  window.location.href = "http://localhost:8000/accounts/google/login/";
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+  window.location.href = `${API_URL}/accounts/google/login/`;
 };
 
 export const logout = () => {
-  window.location.href = "http://localhost:8000/accounts/logout/";
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+  window.location.href = `${API_URL}/accounts/logout/`;
 };

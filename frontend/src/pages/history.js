@@ -7,13 +7,24 @@ function History() {
   const [loading, setLoading] = useState(true);
   const logged = isLoggedIn();
 
-  useEffect(() => {
-    if (!logged) { setLoading(false); return; }
-    axios
-      .get("http://127.0.0.1:8000/api/history/")
-      .then((res) => { setData(res.data); setLoading(false); })
-      .catch((err) => { console.log(err); setLoading(false); });
-  }, [logged]);
+ useEffect(() => {
+  if (!logged) { 
+    setLoading(false); 
+    return; 
+  }
+
+  const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
+  axios
+    .get(`${API_URL}/api/history/`)
+    .then((res) => { 
+      setData(res.data); 
+      setLoading(false); 
+    })
+    .catch((err) => { 
+      console.log(err); 
+      setLoading(false); 
+    });
+}, [logged]);
 
   if (!logged) {
     return (
