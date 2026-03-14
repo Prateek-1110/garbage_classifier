@@ -1,3 +1,4 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
 django==6.0.3
 django-allauth
 django-cors-headers
@@ -8,3 +9,8 @@ whitenoise
 requests
 PyJWT[crypto]
 cryptography
+torch
+torchvision
+pencv-python-headless
+pillow
+numpy
