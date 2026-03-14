@@ -1,0 +1,7 @@
+django>=4.2,<5.0  
+django-allauth
+django-cors-headers
+djangorestframework
+python-dotenv
+gunicorn
+whitenoise
