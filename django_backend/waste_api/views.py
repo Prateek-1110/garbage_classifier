@@ -106,3 +106,10 @@ def signup(request):
 def logout_view(request):
     logout(request)
     return redirect("/api")
+    
+from django.http import JsonResponse
+
+def home(request):
+    return JsonResponse({
+        "message": "Garbage Classifier API running"
+    })
