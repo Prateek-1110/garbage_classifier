@@ -79,8 +79,8 @@ garbage_ai/
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/garbage-ai.git
-cd garbage-ai
+git clone https://github.com/prateek-1110/garbage-classifier.git
+cd garbage-classifier
 ```
 
 ---
