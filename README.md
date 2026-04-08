@@ -53,7 +53,7 @@ Built using **Deep Learning + Django + React**, with **Google OAuth authenticati
 ## 📂 Project Structure
 
 ```
-garbage_ai/
+garbage_classifier/
 │
 ├── model/
 │   └── garbage.pth
@@ -79,8 +79,8 @@ garbage_ai/
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/prateek-1110/garbage-classifier.git
-cd garbage-classifier
+git clone https://github.com/prateek-1110/garbage_classifier.git
+cd garbage_classifier
 ```
 
 ---
